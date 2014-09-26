@@ -18,7 +18,9 @@
 
     //处理页码显示的方法
     var pageHandle = function(customPager) {
+        //总共页数
         var totalPageCount = customPager.totalCount % customPager.pageSize == 0 ? parseInt(customPager.totalCount / customPager.pageSize) : parseInt(customPager.totalCount / customPager.pageSize) + 1;
+        //显示页码的数量
         var displayPageCount = customPager.displayPageCount;
         var rangeStartIndex;
         var rangeEndIndex;
@@ -159,9 +161,13 @@
 
         //构造函数
         var CustomPager = function(url, pageSize) {
+            //当前页码
             this.pageIndex = 1;
+            //每页行数
             this.pageSize = pageSize;
+            //分页器中显示的页码数
             this.displayPageCount = 8;
+            //总共行数
             this.totalCount = 0;
             this.url = url;
             this.orderField = "";
