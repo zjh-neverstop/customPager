@@ -18,7 +18,7 @@
 
     //处理页码显示的方法
     var pageHandle = function(customPager) {
-        var totalCount = customPager.totalCount % customPager.pageSize == 0 ? parseInt(customPager.totalCount / customPager.pageSize) : parseInt(customPager.totalCount / customPager.pageSize) + 1;
+        var totalPageCount = customPager.totalCount % customPager.pageSize == 0 ? parseInt(customPager.totalCount / customPager.pageSize) : parseInt(customPager.totalCount / customPager.pageSize) + 1;
         var displayPageCount = customPager.displayPageCount;
         var rangeStartIndex;
         var rangeEndIndex;
@@ -35,13 +35,13 @@
             rangeEndIndex = rangeEndIndex + (1 - rangeStartIndex);
             rangeStartIndex = 1;
 
-            rangeEndIndex = rangeEndIndex > totalCount ? totalCount : rangeEndIndex;
+            rangeEndIndex = rangeEndIndex > totalPageCount ? totalPageCount : rangeEndIndex;
         }
 
         //范围结尾的处理
-        if (rangeEndIndex > totalCount) {
-            rangeStartIndex = rangeStartIndex - (rangeEndIndex - totalCount);
-            rangeEndIndex = totalCount;
+        if (rangeEndIndex > totalPageCount) {
+            rangeStartIndex = rangeStartIndex - (rangeEndIndex - totalPageCount);
+            rangeEndIndex = totalPageCount;
 
             rangeStartIndex = rangeStartIndex < 1 ? 1 : rangeStartIndex;
         }
@@ -106,7 +106,7 @@
         }
 
         //是否显示结尾省略符
-        if (rangeEndIndex + 1 < totalCount) {
+        if (rangeEndIndex + 1 < totalPageCount) {
             pageInfo.hasEndSeparator = "yes";
             pagerNode.appendChild(document.createTextNode("..."));
         }
@@ -115,22 +115,22 @@
         }
 
         //是否额外显示最后一页
-        if (rangeEndIndex < totalCount) {
+        if (rangeEndIndex < totalPageCount) {
             var node = document.createElement("A");
-            node.href = "#" + totalCount;
+            node.href = "#" + totalPageCount;
 
             node.onclick = function() {
-                console.debug(totalCount);
-                customPager.getPagedData(totalCount);
+                console.debug(totalPageCount);
+                customPager.getPagedData(totalPageCount);
                 return false;
             };
-            node.appendChild(document.createTextNode(totalCount));
+            node.appendChild(document.createTextNode(totalPageCount));
             pagerNode.appendChild(node);
         }
 
         //是否显示next
-        pageInfo.hasNext = customPager.pageIndex < totalCount ? "yes" : "no";
-        if (customPager.pageIndex < totalCount) {
+        pageInfo.hasNext = customPager.pageIndex < totalPageCount ? "yes" : "no";
+        if (customPager.pageIndex < totalPageCount) {
             pageInfo.hasNext = "yes";
 
             var next = document.createElement("A");
