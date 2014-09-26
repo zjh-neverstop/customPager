@@ -29,13 +29,6 @@
         rangeStartIndex = customPager.pageIndex - parseInt((displayPageCount / 2));
         rangeEndIndex = customPager.pageIndex + parseInt((displayPageCount / 2));
 
-        //测试代码
-        /*console.debug("rangeStartIndex:"+rangeStartIndex);
-        console.debug("rangeEndIndex:"+rangeEndIndex);
-        console.debug("totalCount:"+totalCount);
-        console.debug("pageIndex:"+customPager.pageIndex);
-        console.debug(customPager);*/
-
 
         //范围开头的处理
         if (rangeStartIndex < 1) {
