@@ -174,6 +174,15 @@
             this.orderDirection = "";
             //查询参数
             this.searchParams = {};
+            
+            /*
+            前一个版本中，直接以html的方式返回表格数据，这样就直接限制了返回数据的格式，
+            通过定义回调函数，把数据交由调用者自己处理，增强了分页器的灵活性，还能很方便的与knockoutjs框架进行配合使用
+            例如：可以在mvvm模型中定义一个分页器，然后通过定义回调函数，将分页器获取的数据赋值给mvvm中的相关属性，
+                  来实现UI的自动刷新
+            */
+            //获取数据后的回调事件，调用者自行实现数据的处理方法
+            this.pageCallback = null;
 
         };
 
@@ -198,17 +207,22 @@
                 $.ajax({
                     type: "POST",
                     url: this.url,
-                    dataType: "html",
+                    dataType: "json", //"html",
                     data: params,
                     success: function(result) {
-                        var tempNode = document.createElement("DIV");
+                        /*var tempNode = document.createElement("DIV");
                         tempNode.style.display = "none";
                         tempNode.innerHTML = result;
                         document.body.appendChild(tempNode);
                         document.getElementById('resultArea').innerHTML = document.getElementById('resultData').innerHTML;
                         pagerObj.totalCount = document.getElementById("resultCount").innerHTML;
                         pageHandle(pagerObj);
-                        document.body.removeChild(tempNode);
+                        document.body.removeChild(tempNode);*/
+                        pagerObj.totalCount = result.totalCount;
+                        console.debug(result);
+                        pageHandle(pagerObj);
+                        
+                        pagerObj.pageCallback(result);
                     }
                 });
             },
