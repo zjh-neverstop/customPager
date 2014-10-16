@@ -170,8 +170,8 @@
             //总共行数
             this.totalCount = 0;
             this.url = url;
-            this.orderField = "";
-            this.orderDirection = "";
+            //this.orderField = "";
+            //this.orderDirection = "";
             //查询参数
             this.searchParams = {};
             
@@ -201,8 +201,8 @@
 
                 params.pageIndex = pageIndex;
                 params.pageSize = pagerObj.pageSize;
-                params.orderField = pagerObj.orderField;
-                params.orderDirection = pagerObj.orderDirection;
+                //params.orderField = pagerObj.orderField;
+                //params.orderDirection = pagerObj.orderDirection;
 
                 $.ajax({
                     type: "POST",
