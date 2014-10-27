@@ -150,7 +150,9 @@
         }
 
         document.getElementById("pager").innerHTML = "";
-        document.getElementById("pager").appendChild(pagerNode);
+        if (totalPageCount > 1) {
+            document.getElementById("pager").appendChild(pagerNode);
+        }
 
     };
 
