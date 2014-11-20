@@ -1,5 +1,5 @@
 /**
-* Created by 赵晶浩 on 14-9-19.
+* Created by zhaojinghao on 14-9-19.
 */
 
 //自定义前端分页器
@@ -18,7 +18,9 @@
 
     //处理页码显示的方法
     var pageHandle = function(customPager) {
-        var totalCount = customPager.totalCount % customPager.pageSize == 0 ? parseInt(customPager.totalCount / customPager.pageSize) : parseInt(customPager.totalCount / customPager.pageSize) + 1;
+        //总共页数
+        var totalPageCount = customPager.totalCount % customPager.pageSize == 0 ? parseInt(customPager.totalCount / customPager.pageSize) : parseInt(customPager.totalCount / customPager.pageSize) + 1;
+        //显示页码的数量
         var displayPageCount = customPager.displayPageCount;
         var rangeStartIndex;
         var rangeEndIndex;
@@ -35,13 +37,13 @@
             rangeEndIndex = rangeEndIndex + (1 - rangeStartIndex);
             rangeStartIndex = 1;
 
-            rangeEndIndex = rangeEndIndex > totalCount ? totalCount : rangeEndIndex;
+            rangeEndIndex = rangeEndIndex > totalPageCount ? totalPageCount : rangeEndIndex;
         }
 
         //范围结尾的处理
-        if (rangeEndIndex > totalCount) {
-            rangeStartIndex = rangeStartIndex - (rangeEndIndex - totalCount);
-            rangeEndIndex = totalCount;
+        if (rangeEndIndex > totalPageCount) {
+            rangeStartIndex = rangeStartIndex - (rangeEndIndex - totalPageCount);
+            rangeEndIndex = totalPageCount;
 
             rangeStartIndex = rangeStartIndex < 1 ? 1 : rangeStartIndex;
         }
@@ -106,7 +108,7 @@
         }
 
         //是否显示结尾省略符
-        if (rangeEndIndex + 1 < totalCount) {
+        if (rangeEndIndex + 1 < totalPageCount) {
             pageInfo.hasEndSeparator = "yes";
             pagerNode.appendChild(document.createTextNode("..."));
         }
@@ -115,22 +117,22 @@
         }
 
         //是否额外显示最后一页
-        if (rangeEndIndex < totalCount) {
+        if (rangeEndIndex < totalPageCount) {
             var node = document.createElement("A");
-            node.href = "#" + totalCount;
+            node.href = "#" + totalPageCount;
 
             node.onclick = function() {
-                console.debug(totalCount);
-                customPager.getPagedData(totalCount);
+                console.debug(totalPageCount);
+                customPager.getPagedData(totalPageCount);
                 return false;
             };
-            node.appendChild(document.createTextNode(totalCount));
+            node.appendChild(document.createTextNode(totalPageCount));
             pagerNode.appendChild(node);
         }
 
         //是否显示next
-        pageInfo.hasNext = customPager.pageIndex < totalCount ? "yes" : "no";
-        if (customPager.pageIndex < totalCount) {
+        pageInfo.hasNext = customPager.pageIndex < totalPageCount ? "yes" : "no";
+        if (customPager.pageIndex < totalPageCount) {
             pageInfo.hasNext = "yes";
 
             var next = document.createElement("A");
@@ -148,7 +150,9 @@
         }
 
         document.getElementById("pager").innerHTML = "";
-        document.getElementById("pager").appendChild(pagerNode);
+        if (totalPageCount > 1) {
+            document.getElementById("pager").appendChild(pagerNode);
+        }
 
     };
 
@@ -159,15 +163,28 @@
 
         //构造函数
         var CustomPager = function(url, pageSize) {
+            //当前页码
             this.pageIndex = 1;
+            //每页行数
             this.pageSize = pageSize;
+            //分页器中显示的页码数
             this.displayPageCount = 8;
+            //总共行数
             this.totalCount = 0;
             this.url = url;
-            this.orderField = "";
-            this.orderDirection = "";
+            //this.orderField = "";
+            //this.orderDirection = "";
             //查询参数
             this.searchParams = {};
+            
+            /*
+            前一个版本中，直接以html的方式返回表格数据，这样就直接限制了返回数据的格式，
+            通过定义回调函数，把数据交由调用者自己处理，增强了分页器的灵活性，还能很方便的与knockoutjs框架进行配合使用
+            例如：可以在mvvm模型中定义一个分页器，然后通过定义回调函数，将分页器获取的数据赋值给mvvm中的相关属性，
+                  来实现UI的自动刷新
+            */
+            //获取数据后的回调事件，调用者自行实现数据的处理方法
+            this.pageCallback = null;
 
         };
 
@@ -186,23 +203,28 @@
 
                 params.pageIndex = pageIndex;
                 params.pageSize = pagerObj.pageSize;
-                params.orderField = pagerObj.orderField;
-                params.orderDirection = pagerObj.orderDirection;
+                //params.orderField = pagerObj.orderField;
+                //params.orderDirection = pagerObj.orderDirection;
 
                 $.ajax({
                     type: "POST",
                     url: this.url,
-                    dataType: "html",
+                    dataType: "json", //"html",
                     data: params,
                     success: function(result) {
-                        var tempNode = document.createElement("DIV");
+                        /*var tempNode = document.createElement("DIV");
                         tempNode.style.display = "none";
                         tempNode.innerHTML = result;
                         document.body.appendChild(tempNode);
                         document.getElementById('resultArea').innerHTML = document.getElementById('resultData').innerHTML;
                         pagerObj.totalCount = document.getElementById("resultCount").innerHTML;
                         pageHandle(pagerObj);
-                        document.body.removeChild(tempNode);
+                        document.body.removeChild(tempNode);*/
+                        pagerObj.totalCount = result.totalCount;
+                        console.debug(result);
+                        pageHandle(pagerObj);
+                        
+                        pagerObj.pageCallback(result);
                     }
                 });
             },
