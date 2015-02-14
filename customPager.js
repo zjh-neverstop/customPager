@@ -63,15 +63,9 @@
         }
 
         //是否显示prev
-        //pageInfo.hasPrev = customPager.pageIndex > 1 ? "yes" : "no";
         if (customPager.pageIndex > 1) {
             pageInfo.hasPrev = "yes";
             var prev = document.createElement("A");
-            /*prev.href = customPager.baseUrl + "?page=" + (customPager.pageIndex - 1);
-            prev.onclick = function() {
-                customPager.getPagedData(customPager.pageIndex - 1);
-                return false;
-            };*/
             bind(customPager,customPager.pageIndex - 1,prev);
             prev.appendChild(document.createTextNode("< Prev"));
             pagerNode.appendChild(prev);
@@ -83,11 +77,6 @@
         //是否额外显示第一页
         if (rangeStartIndex > 1) {
             var node = document.createElement("A");
-            /*node.href = customPager.baseUrl + "?page=1";
-            node.onclick = function() {
-                customPager.getPagedData(1);
-                return false;
-            };*/
             bind(customPager,1,node);
             node.appendChild(document.createTextNode("1"));
             pagerNode.appendChild(node);
@@ -104,23 +93,6 @@
 
         for (var i = rangeStartIndex; i <= rangeEndIndex; i++) {
             var node = document.createElement("A");
-            //node.href = customPager.baseUrl + "?page=" + i;
-
-            //绑定事件，此处需注意闭包问题
-            /*(function(i) {
-                addHandler(node, "click", function() {
-                    alert(i);
-                    customPager.getPagedData(i);
-                    return false;
-                });
-            })(i);*/
-
-            /*node.onclick = (function(i){
-                return function() {
-                    customPager.getPagedData(i);
-                    return false;
-                }
-            })(i);*/
             bind(customPager,i,node);
             node.appendChild(document.createTextNode(i));
 
@@ -144,13 +116,6 @@
         //是否额外显示最后一页
         if (rangeEndIndex < totalPageCount) {
             var node = document.createElement("A");
-            /*node.href = customPager.baseUrl + "?page=" + totalPageCount;
-
-            node.onclick = function() {
-                console.debug(totalPageCount);
-                customPager.getPagedData(totalPageCount);
-                return false;
-            };*/
             bind(customPager,totalPageCount,node);
             node.appendChild(document.createTextNode(totalPageCount));
             pagerNode.appendChild(node);
@@ -162,12 +127,6 @@
             pageInfo.hasNext = "yes";
 
             var next = document.createElement("A");
-            /*next.href = customPager.baseUrl + "?page=" + (customPager.pageIndex + 1);
-            next.onclick = function() {
-
-                customPager.getPagedData(customPager.pageIndex + 1);
-                return false;
-            };*/
             bind(customPager,customPager.pageIndex + 1,next);
             next.appendChild(document.createTextNode("Next >"));
 
@@ -205,8 +164,6 @@
             this.url = url || "";
             //分页方式
             this.pageMode = "link";
-            //this.orderField = "";
-            //this.orderDirection = "";
             //查询参数
             this.searchParams = {};
             
@@ -236,23 +193,13 @@
 
                 params.pageIndex = pageIndex;
                 params.pageSize = pagerObj.pageSize;
-                //params.orderField = pagerObj.orderField;
-                //params.orderDirection = pagerObj.orderDirection;
 
                 $.ajax({
                     type: "POST",
                     url: this.url,
-                    dataType: "json", //"html",
+                    dataType: "json", 
                     data: params,
                     success: function(result) {
-                        /*var tempNode = document.createElement("DIV");
-                        tempNode.style.display = "none";
-                        tempNode.innerHTML = result;
-                        document.body.appendChild(tempNode);
-                        document.getElementById('resultArea').innerHTML = document.getElementById('resultData').innerHTML;
-                        pagerObj.totalCount = document.getElementById("resultCount").innerHTML;
-                        pageHandle(pagerObj);
-                        document.body.removeChild(tempNode);*/
                         pagerObj.totalCount = result.totalCount;
                         console.debug(result);
                         pageHandle(pagerObj);
