@@ -18,7 +18,7 @@ pager.totalCount = 1000;
 //pager.getPagedData(1);
 
 var pageIndex = getQueryStringByName("page") || 1;
-//跳转基地址，这里是测试数据
+//跳转基地址，这里是测试数据，如果你下载了该类库，需要演示的话请把下面的baseUrl替换为你存放example.html的绝对路径
 pager.baseUrl = "file:///F:/test/customPager/example.html";  
 //直接设置当前页，如果使用href方式翻页，需要使用该方法
 pager.setCurrentIndex(pageIndex);
