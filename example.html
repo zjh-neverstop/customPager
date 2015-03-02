@@ -24,6 +24,7 @@
 		font-weight: bold;
 		margin: 0 2px;
 		padding: 2px 5px;
+		cursor:default;
 	}
 	
 	.pager a{
@@ -56,14 +57,18 @@
 	//为了测试这里直接指定数据总数，实际应该从服务器获取
 	pager.totalCount = 1000;
 
-	//pager.pageMode = "click";   //ajax方式获取数据需要将pageMode设置为click模式
+	/*-- click模式 --*/
+	/*
+	pager.pageMode = "click";   //ajax方式获取数据需要将pageMode设置为click模式
 	//通过ajax方式获取分页数据后的回调函数，可以在该方法中处理显示逻辑，绑定模板之类的
-	//pager.pageCallback = function(result){ //TODO };
+	pager.pageCallback = function(result){ //TODO };
 	//设置当前页，并通过ajax方式获取该页数据
-	//pager.getPagedData(1);
+	pager.getPagedData(1);
+	*/
 	
+	/*-- link模式 --*/
 	var pageIndex = getQueryStringByName("page") || 1;
-	//跳转基地址，这里是测试数据
+	//跳转基地址，这里是测试数据，如果你下载了该类库，需要演示的话请把下面的baseUrl替换为你存放example.html的绝对路径
 	pager.baseUrl = "file:///F:/test/customPager/example.html";  
 	//直接设置当前页，如果使用href方式翻页，需要使用该方法
 	pager.setCurrentIndex(pageIndex);
