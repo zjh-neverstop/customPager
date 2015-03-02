@@ -93,11 +93,14 @@
 
         for (var i = rangeStartIndex; i <= rangeEndIndex; i++) {
             var node = document.createElement("A");
-            bind(customPager,i,node);
+            
             node.appendChild(document.createTextNode(i));
 
             if (i == customPager.pageIndex) {
                 node.className = "current";
+            }
+            else{
+                bind(customPager,i,node);
             }
 
             pagerNode.appendChild(node);
