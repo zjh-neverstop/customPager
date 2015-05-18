@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
 	<style type="text/css">
 	body {
 		font-size: 12px;
@@ -35,6 +36,46 @@
 		text-decoration: none;
 		cursor: pointer;
 	}
+
+
+
+/* Ä¬ÈÏÑùÊ½
+	.default-pager{
+	font-size: 12px;
+	margin: 10px 0;
+	text-align: right;
+	line-height: 2;
+	overflow: hidden;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+}
+
+.default-pager a{
+	padding: 2px 5px;
+	text-decoration: none;
+	cursor:pointer;
+	color:#666666;
+}
+
+.default-pager a:hover{
+	color:orange;
+}
+
+.default-pager a.default-disabled{
+	color:lightgray;
+	cursor:default;
+}
+
+.default-pager a.current{
+	color:red;
+	font-weight:bold;
+	cursor:default;
+}
+
+.shenglue{
+	position: relative;
+	top: -3px;
+}
+*/
 	
 	
 	</style>
@@ -46,34 +87,36 @@
 	<div id="resultArea">
 		<div id="resultData">
 		</div>
-		<div id="pager" class="pager">
+		<div id="pager" class="default-pager">
 		</div>
 	</div>
-
+	<div id="ajax-loader" class="loader">
+        <img src="" />
+    </div>
 	<script type="text/javascript">
 
-	//å®ä¾‹åŒ–åˆ†é¡µå™¨
+	//ÊµÀı»¯·ÖÒ³Æ÷
 	var pager = CustomPager(10);
-	//ä¸ºäº†æµ‹è¯•è¿™é‡Œç›´æ¥æŒ‡å®šæ•°æ®æ€»æ•°ï¼Œå®é™…åº”è¯¥ä»æœåŠ¡å™¨è·å–
+	//ÎªÁË²âÊÔÕâÀïÖ±½ÓÖ¸¶¨Êı¾İ×ÜÊı£¬Êµ¼ÊÓ¦¸Ã´Ó·şÎñÆ÷»ñÈ¡
 	pager.totalCount = 1000;
 
-	/*-- clickæ¨¡å¼ --*/
-	/*
-	pager.pageMode = "click";   //ajaxæ–¹å¼è·å–æ•°æ®éœ€è¦å°†pageModeè®¾ç½®ä¸ºclickæ¨¡å¼
-	//é€šè¿‡ajaxæ–¹å¼è·å–åˆ†é¡µæ•°æ®åçš„å›è°ƒå‡½æ•°ï¼Œå¯ä»¥åœ¨è¯¥æ–¹æ³•ä¸­å¤„ç†æ˜¾ç¤ºé€»è¾‘ï¼Œç»‘å®šæ¨¡æ¿ä¹‹ç±»çš„
+	/*-- clickÄ£Ê½ --*/
+	
+	pager.pageMode = "click";   //ajax·½Ê½»ñÈ¡Êı¾İĞèÒª½«pageModeÉèÖÃÎªclickÄ£Ê½
+	//Í¨¹ıajax·½Ê½»ñÈ¡·ÖÒ³Êı¾İºóµÄ»Øµ÷º¯Êı£¬¿ÉÒÔÔÚ¸Ã·½·¨ÖĞ´¦ÀíÏÔÊ¾Âß¼­£¬°ó¶¨Ä£°åÖ®ÀàµÄ
 	pager.pageCallback = function(result){ 
 		//TODO 
 	};
-	//è®¾ç½®å½“å‰é¡µï¼Œå¹¶é€šè¿‡ajaxæ–¹å¼è·å–è¯¥é¡µæ•°æ®
+	//ÉèÖÃµ±Ç°Ò³£¬²¢Í¨¹ıajax·½Ê½»ñÈ¡¸ÃÒ³Êı¾İ
 	pager.getPagedData(1);
-	*/
 	
-	/*-- linkæ¨¡å¼ --*/
-	var pageIndex = getQueryStringByName("page") || 1;
-	//è·³è½¬åŸºåœ°å€ï¼Œè¿™é‡Œæ˜¯æµ‹è¯•æ•°æ®ï¼Œå¦‚æœä½ ä¸‹è½½äº†è¯¥ç±»åº“ï¼Œéœ€è¦æ¼”ç¤ºçš„è¯è¯·æŠŠä¸‹é¢çš„baseUrlæ›¿æ¢ä¸ºä½ å­˜æ”¾example.htmlçš„ç»å¯¹è·¯å¾„
-	pager.baseUrl = "file:///F:/test/customPager/example.html";  
-	//ç›´æ¥è®¾ç½®å½“å‰é¡µï¼Œå¦‚æœä½¿ç”¨hrefæ–¹å¼ç¿»é¡µï¼Œéœ€è¦ä½¿ç”¨è¯¥æ–¹æ³•
-	pager.setCurrentIndex(pageIndex);
+	
+	/*-- linkÄ£Ê½ --*/
+	/*var pageIndex = getQueryStringByName("page") || 1;
+	//Ìø×ª»ùµØÖ·£¬ÕâÀïÊÇ²âÊÔÊı¾İ£¬Èç¹ûÄãÏÂÔØÁË¸ÃÀà¿â£¬ĞèÒªÑİÊ¾µÄ»°Çë°ÑÏÂÃæµÄbaseUrlÌæ»»ÎªÄã´æ·Åexample.htmlµÄ¾ø¶ÔÂ·¾¶
+	pager.baseUrl = "file:///F:/baiduGit/customPager/example.html";  
+	//Ö±½ÓÉèÖÃµ±Ç°Ò³£¬Èç¹ûÊ¹ÓÃhref·½Ê½·­Ò³£¬ĞèÒªÊ¹ÓÃ¸Ã·½·¨
+	pager.setCurrentIndex(pageIndex);*/
 
 	function getQueryStringByName(name) {
         var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
