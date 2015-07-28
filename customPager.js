@@ -140,9 +140,9 @@
             pageInfo.hasNext = "no";
         }
 
-        document.getElementById("pager").innerHTML = "";
+        document.getElementById(customPager.placeHolderId).innerHTML = "";
         if (totalPageCount > 1) {
-            document.getElementById("pager").appendChild(pagerNode);
+            document.getElementById(customPager.placeHolderId).appendChild(pagerNode);
         }
 
     };
@@ -271,9 +271,9 @@
 
 
 
-        document.getElementById("pager").innerHTML = "";
+        document.getElementById(customPager.placeHolderId).innerHTML = "";
         if (totalPageCount > 1) {
-            document.getElementById("pager").appendChild(pagerNode);
+            document.getElementById(customPager.placeHolderId).appendChild(pagerNode);
         }
     };
 
@@ -309,6 +309,8 @@
             this.searchParams = {};
 			//分页样式
             this.pagerStyle = "defaultPager";
+			//显示页码的容器id
+			this.placeHolderId = "pager";
             
             /*
             前一个版本中，直接以html的方式返回表格数据，这样就直接限制了返回数据的格式，
