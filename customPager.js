@@ -2,10 +2,10 @@
 * Created by zhaojinghao on 14-9-19.
 */
 
-//×Ô¶¨ÒåÇ°¶Ë·ÖÒ³Æ÷
+//è‡ªå®šä¹‰å‰ç«¯åˆ†é¡µå™¨
 (function(window) {
 
-    //ÊÂ¼ş°ó¶¨Æ÷
+    //äº‹ä»¶ç»‘å®šå™¨
     var addHandler = function(element, type, handler) {
         if (element.addEventListener) {
             element.addEventListener(type, handler, false);
@@ -16,7 +16,7 @@
         }
     };
 
-    //°ó¶¨·ÖÒ³´¦Àí
+    //ç»‘å®šåˆ†é¡µå¤„ç†
     var bind = function(customPager,pageIndex,element){
         if(customPager.pageMode == "link"){
             element.href = customPager.baseUrl + "?page=" + pageIndex;
@@ -31,11 +31,11 @@
 
 	var pageHandleObj = {};
 
-    //´¦ÀíÒ³ÂëÏÔÊ¾µÄ·½·¨
+    //å¤„ç†é¡µç æ˜¾ç¤ºçš„æ–¹æ³•
     pageHandleObj.cnblogPager = function(customPager) {
-        //×Ü¹²Ò³Êı
+        //æ€»å…±é¡µæ•°
         var totalPageCount = customPager.totalCount % customPager.pageSize == 0 ? parseInt(customPager.totalCount / customPager.pageSize) : parseInt(customPager.totalCount / customPager.pageSize) + 1;
-        //ÏÔÊ¾Ò³ÂëµÄÊıÁ¿
+        //æ˜¾ç¤ºé¡µç çš„æ•°é‡
         var displayPageCount = customPager.displayPageCount;
         var rangeStartIndex;
         var rangeEndIndex;
@@ -47,7 +47,7 @@
         rangeEndIndex = customPager.pageIndex + parseInt((displayPageCount / 2));
 
 
-        //·¶Î§¿ªÍ·µÄ´¦Àí
+        //èŒƒå›´å¼€å¤´çš„å¤„ç†
         if (rangeStartIndex < 1) {
             rangeEndIndex = rangeEndIndex + (1 - rangeStartIndex);
             rangeStartIndex = 1;
@@ -55,7 +55,7 @@
             rangeEndIndex = rangeEndIndex > totalPageCount ? totalPageCount : rangeEndIndex;
         }
 
-        //·¶Î§½áÎ²µÄ´¦Àí
+        //èŒƒå›´ç»“å°¾çš„å¤„ç†
         if (rangeEndIndex > totalPageCount) {
             rangeStartIndex = rangeStartIndex - (rangeEndIndex - totalPageCount);
             rangeEndIndex = totalPageCount;
@@ -63,7 +63,7 @@
             rangeStartIndex = rangeStartIndex < 1 ? 1 : rangeStartIndex;
         }
 
-        //ÊÇ·ñÏÔÊ¾prev
+        //æ˜¯å¦æ˜¾ç¤ºprev
         if (customPager.pageIndex > 1) {
             pageInfo.hasPrev = "yes";
             var prev = document.createElement("A");
@@ -75,7 +75,7 @@
             pageInfo.hasPrev = "no";
         }
 
-        //ÊÇ·ñ¶îÍâÏÔÊ¾µÚÒ»Ò³
+        //æ˜¯å¦é¢å¤–æ˜¾ç¤ºç¬¬ä¸€é¡µ
         if (rangeStartIndex > 1) {
             var node = document.createElement("A");
             bind(customPager,1,node);
@@ -83,7 +83,7 @@
             pagerNode.appendChild(node);
         }
 
-        //ÊÇ·ñÏÔÊ¾ÆğÊ¼Ê¡ÂÔ·û
+        //æ˜¯å¦æ˜¾ç¤ºèµ·å§‹çœç•¥ç¬¦
         if (rangeStartIndex - 1 > 1) {
             pageInfo.hasStartSeparator = "yes";
             pagerNode.appendChild(document.createTextNode("..."));
@@ -108,7 +108,7 @@
 
         }
 
-        //ÊÇ·ñÏÔÊ¾½áÎ²Ê¡ÂÔ·û
+        //æ˜¯å¦æ˜¾ç¤ºç»“å°¾çœç•¥ç¬¦
         if (rangeEndIndex + 1 < totalPageCount) {
             pageInfo.hasEndSeparator = "yes";
             pagerNode.appendChild(document.createTextNode("..."));
@@ -117,7 +117,7 @@
             pageInfo.hasEndSeparator = "no";
         }
 
-        //ÊÇ·ñ¶îÍâÏÔÊ¾×îºóÒ»Ò³
+        //æ˜¯å¦é¢å¤–æ˜¾ç¤ºæœ€åä¸€é¡µ
         if (rangeEndIndex < totalPageCount) {
             var node = document.createElement("A");
             bind(customPager,totalPageCount,node);
@@ -125,7 +125,7 @@
             pagerNode.appendChild(node);
         }
 
-        //ÊÇ·ñÏÔÊ¾next
+        //æ˜¯å¦æ˜¾ç¤ºnext
         pageInfo.hasNext = customPager.pageIndex < totalPageCount ? "yes" : "no";
         if (customPager.pageIndex < totalPageCount) {
             pageInfo.hasNext = "yes";
@@ -148,14 +148,14 @@
     };
 
 	pageHandleObj.defaultPager = function(customPager) {
-        //×ÜÒ³Êı
+        //æ€»é¡µæ•°
         var totalPageCount = customPager.totalCount % customPager.pageSize == 0 ? parseInt(customPager.totalCount / customPager.pageSize) : parseInt(customPager.totalCount / customPager.pageSize) + 1;
-        //ÏÔÊ¾Ò³ÂëµÄÊıÁ¿
+        //æ˜¾ç¤ºé¡µç çš„æ•°é‡
         var displayPageCount = customPager.displayPageCount;
         var rangeStartIndex;
         var rangeEndIndex;
 
-        //ÓÃÀ´¼ÆËã·¶Î§µÄÖĞ¼ä±äÁ¿
+        //ç”¨æ¥è®¡ç®—èŒƒå›´çš„ä¸­é—´å˜é‡
         var blockIndex = parseInt((customPager.pageIndex - 1) / displayPageCount);
         var blockCount = totalPageCount % displayPageCount == 0 ? parseInt(totalPageCount / displayPageCount) : parseInt(totalPageCount / displayPageCount) + 1;
         rangeStartIndex = blockIndex * displayPageCount + 1;
@@ -172,32 +172,32 @@
         //        console.debug("blockIndex: " + blockIndex);
         //        console.debug("blockCount: " + blockCount);
 
-        //Ê×Ò³
+        //é¦–é¡µ
 		var startNode = document.createElement("A");
 		if (customPager.pageIndex > 1) {
             bind(customPager,1,startNode);
         }
         else {
-            startNode.className = "default-disabled";   //¸ÄÎªclass
+            startNode.className = "default-disabled";   //æ”¹ä¸ºclass
         }
         
-        startNode.appendChild(document.createTextNode("Ê×Ò³"));
+        startNode.appendChild(document.createTextNode("é¦–é¡µ"));
         pagerNode.appendChild(startNode);
 
-        //ÉÏÒ»Ò³
+        //ä¸Šä¸€é¡µ
         var prev = document.createElement("A");
 		if (customPager.pageIndex > 1) {
             bind(customPager,customPager.pageIndex - 1,prev);
         }
         else {
-            prev.className = "default-disabled";   //¸ÄÎªclass
+            prev.className = "default-disabled";   //æ”¹ä¸ºclass
         }
-        prev.appendChild(document.createTextNode("ÉÏÒ»Ò³"));
+        prev.appendChild(document.createTextNode("ä¸Šä¸€é¡µ"));
         pagerNode.appendChild(prev);
 		
 
 
-        //ÊÇ·ñÏÔÊ¾ÆğÊ¼Ê¡ÂÔ·û
+        //æ˜¯å¦æ˜¾ç¤ºèµ·å§‹çœç•¥ç¬¦
         if (blockIndex > 0) {
             pageInfo.hasStartSeparator = "yes";
             var prevEllipsis = document.createElement("A");
@@ -214,25 +214,28 @@
         for (var i = rangeStartIndex; i <= rangeEndIndex; i++) {
             var node = document.createElement("A");
 
-            //°ó¶¨ÊÂ¼ş£¬´Ë´¦Ğè×¢Òâ±Õ°üÎÊÌâ
+            //ç»‘å®šäº‹ä»¶ï¼Œæ­¤å¤„éœ€æ³¨æ„é—­åŒ…é—®é¢˜
             /*(function(i) {
                 addHandler(node, "click", function() {
                     customPager.getPagedData(i);
                     return false;
                 });
             })(i);*/
-			bind(customPager,i,node);
+	    
             node.appendChild(document.createTextNode(i));
 
             if (i == customPager.pageIndex) {
                 node.className = "current";
+            }
+            else{
+            	bind(customPager,i,node);
             }
 
             pagerNode.appendChild(node);
 
         }
 
-        //ÊÇ·ñÏÔÊ¾½áÎ²Ê¡ÂÔ·û
+        //æ˜¯å¦æ˜¾ç¤ºç»“å°¾çœç•¥ç¬¦
         if (blockIndex + 1 < blockCount) {
             pageInfo.hasEndSeparator = "yes";
             var nextEllipsis = document.createElement("A");
@@ -246,26 +249,26 @@
         }
 
 
-        //ÏÂÒ»Ò³
+        //ä¸‹ä¸€é¡µ
         var next = document.createElement("A");
-        next.appendChild(document.createTextNode("ÏÂÒ»Ò³"));
+        next.appendChild(document.createTextNode("ä¸‹ä¸€é¡µ"));
         console.log("typeof customPager:" + (typeof customPager.pageIndex));
         if (customPager.pageIndex < totalPageCount) {
 			bind(customPager,(customPager.pageIndex + 1),next);
         }
         else {
-            next.className = "default-disabled";   //¸ÄÎªclass
+            next.className = "default-disabled";   //æ”¹ä¸ºclass
         }
         pagerNode.appendChild(next);
 
-        //Î²Ò³
+        //å°¾é¡µ
         var endNode = document.createElement("A");
-        endNode.appendChild(document.createTextNode("Î²Ò³"));
+        endNode.appendChild(document.createTextNode("å°¾é¡µ"));
         if (customPager.pageIndex < totalPageCount) {
 			bind(customPager,totalPageCount,endNode);
         }
         else {
-            endNode.className = "default-disabled";   //¸ÄÎªclass
+            endNode.className = "default-disabled";   //æ”¹ä¸ºclass
         }
         pagerNode.appendChild(endNode);
 
@@ -277,7 +280,7 @@
         }
     };
 
-	//Ïà¶ÔÆÁÄ»¾ÓÖĞÏÔÊ¾
+	//ç›¸å¯¹å±å¹•å±…ä¸­æ˜¾ç¤º
     function makeCenter(id) {
         document.getElementById(id).style.display = "block";
         $('#' + id).css("top", Math.max(0, (($(window).height() - $('#' + id).outerHeight()) / 2) + $(window).scrollTop()) + "px");
@@ -286,44 +289,44 @@
 
 
     var CustomPager = (function(window) {
-        //È«¾ÖÅäÖÃ
+        //å…¨å±€é…ç½®
         var globalConfig = {};
 
-        //¹¹Ôìº¯Êı
+        //æ„é€ å‡½æ•°
         var CustomPager = function(pageSize,url) {
-            //µ±Ç°Ò³Âë
+            //å½“å‰é¡µç 
             this.pageIndex = 1;
-            //Ã¿Ò³ĞĞÊı
+            //æ¯é¡µè¡Œæ•°
             this.pageSize = pageSize;
-            //·ÖÒ³Æ÷ÖĞÏÔÊ¾µÄÒ³ÂëÊı
+            //åˆ†é¡µå™¨ä¸­æ˜¾ç¤ºçš„é¡µç æ•°
             this.displayPageCount = 8;
-            //×Ü¹²ĞĞÊı
+            //æ€»å…±è¡Œæ•°
             this.totalCount = 0;
-            //Ìø×ª»ùµØÖ·
+            //è·³è½¬åŸºåœ°å€
             this.baseUrl = '/';
             //server url
             this.url = url || "";
-            //·ÖÒ³·½Ê½
+            //åˆ†é¡µæ–¹å¼
             this.pageMode = "link";
-            //²éÑ¯²ÎÊı
+            //æŸ¥è¯¢å‚æ•°
             this.searchParams = {};
-			//·ÖÒ³ÑùÊ½
+			//åˆ†é¡µæ ·å¼
             this.pagerStyle = "defaultPager";
-			//ÏÔÊ¾Ò³ÂëµÄÈİÆ÷id
+			//æ˜¾ç¤ºé¡µç çš„å®¹å™¨id
 			this.placeHolderId = "pager";
             
             /*
-            Ç°Ò»¸ö°æ±¾ÖĞ£¬Ö±½ÓÒÔhtmlµÄ·½Ê½·µ»Ø±í¸ñÊı¾İ£¬ÕâÑù¾ÍÖ±½ÓÏŞÖÆÁË·µ»ØÊı¾İµÄ¸ñÊ½£¬
-            Í¨¹ı¶¨Òå»Øµ÷º¯Êı£¬°ÑÊı¾İ½»ÓÉµ÷ÓÃÕß×Ô¼º´¦Àí£¬ÔöÇ¿ÁË·ÖÒ³Æ÷µÄÁé»îĞÔ£¬»¹ÄÜºÜ·½±ãµÄÓëknockoutjs¿ò¼Ü½øĞĞÅäºÏÊ¹ÓÃ
-            ÀıÈç£º¿ÉÒÔÔÚmvvmÄ£ĞÍÖĞ¶¨ÒåÒ»¸ö·ÖÒ³Æ÷£¬È»ºóÍ¨¹ı¶¨Òå»Øµ÷º¯Êı£¬½«·ÖÒ³Æ÷»ñÈ¡µÄÊı¾İ¸³Öµ¸ømvvmÖĞµÄÏà¹ØÊôĞÔ£¬
-                  À´ÊµÏÖUIµÄ×Ô¶¯Ë¢ĞÂ
+            å‰ä¸€ä¸ªç‰ˆæœ¬ä¸­ï¼Œç›´æ¥ä»¥htmlçš„æ–¹å¼è¿”å›è¡¨æ ¼æ•°æ®ï¼Œè¿™æ ·å°±ç›´æ¥é™åˆ¶äº†è¿”å›æ•°æ®çš„æ ¼å¼ï¼Œ
+            é€šè¿‡å®šä¹‰å›è°ƒå‡½æ•°ï¼ŒæŠŠæ•°æ®äº¤ç”±è°ƒç”¨è€…è‡ªå·±å¤„ç†ï¼Œå¢å¼ºäº†åˆ†é¡µå™¨çš„çµæ´»æ€§ï¼Œè¿˜èƒ½å¾ˆæ–¹ä¾¿çš„ä¸knockoutjsæ¡†æ¶è¿›è¡Œé…åˆä½¿ç”¨
+            ä¾‹å¦‚ï¼šå¯ä»¥åœ¨mvvmæ¨¡å‹ä¸­å®šä¹‰ä¸€ä¸ªåˆ†é¡µå™¨ï¼Œç„¶åé€šè¿‡å®šä¹‰å›è°ƒå‡½æ•°ï¼Œå°†åˆ†é¡µå™¨è·å–çš„æ•°æ®èµ‹å€¼ç»™mvvmä¸­çš„ç›¸å…³å±æ€§ï¼Œ
+                  æ¥å®ç°UIçš„è‡ªåŠ¨åˆ·æ–°
             */
-            //»ñÈ¡Êı¾İºóµÄ»Øµ÷ÊÂ¼ş£¬µ÷ÓÃÕß×ÔĞĞÊµÏÖÊı¾İµÄ´¦Àí·½·¨
+            //è·å–æ•°æ®åçš„å›è°ƒäº‹ä»¶ï¼Œè°ƒç”¨è€…è‡ªè¡Œå®ç°æ•°æ®çš„å¤„ç†æ–¹æ³•
             this.pageCallback = null;
 
         };
 
-        //Ô­ĞÍº¯Êı
+        //åŸå‹å‡½æ•°
         CustomPager.prototype = {
             getPagedData: function(pageIndex) {
                 this.pageIndex = pageIndex;
@@ -364,7 +367,7 @@
                 });
             },
 
-            //ÉèÖÃµ±Ç°Ò³
+            //è®¾ç½®å½“å‰é¡µ
             setCurrentIndex:function(pageIndex,totalCount){
                 this.pageIndex = parseInt(pageIndex);
                 if(totalCount && typeof totalCount == "number"){
@@ -379,7 +382,7 @@
             }
         };
 
-        //¹¤³§·½·¨
+        //å·¥å‚æ–¹æ³•
         return function(pageSize,url) {
             return new CustomPager(pageSize,url);
         };
