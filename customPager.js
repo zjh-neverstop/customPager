@@ -203,7 +203,7 @@
             var prevEllipsis = document.createElement("A");
             prevEllipsis.appendChild(document.createTextNode("..."));
             prevEllipsis.className = "shenglue";
-			bind(customPager,parseInt((blockIndex - 1) * displayPageCount + 1),prevEllipsis);
+			bind(customPager,parseInt(blockIndex * displayPageCount),prevEllipsis);
             pagerNode.appendChild(prevEllipsis);
         }
         else {
