@@ -19,7 +19,8 @@
     //绑定分页处理
     var bind = function(customPager,pageIndex,element){
         if(customPager.pageMode == "link"){
-            element.href = customPager.baseUrl + "?page=" + pageIndex;
+            var tag = customPager.baseUrl.indexOf("?") > 0 ? "&" : "?";
+            element.href = customPager.baseUrl + tag + "page=" + pageIndex;
         }
         else{
             element.onclick = function(){
